@@ -1,6 +1,7 @@
 module SpreeManagement
   class Engine < Rails::Engine
     require 'spree/core'
+    require 'csv'
     isolate_namespace Spree
     engine_name 'spree_management'
 
