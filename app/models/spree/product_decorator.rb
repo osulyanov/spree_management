@@ -3,7 +3,7 @@ Spree::Product.class_eval do
     CSV.generate(options) do |csv|
       csv << csv_column_names
       all.each do |p|
-        csv << [p.sku, p.name, p.description.delete!("\n"),
+        csv << [p.sku, p.name, (p.description ? p.description.delete!("\n") : ''),
                 p.taxons.map(&:name).join(', '), p.full_url, (p.total_on_hand > 0 ? 'in stock' : 'out of stock'),
                 p.price.to_s, p.shipping_category.try(:name), p.property(:Selleralias),
                 p.property(:Sellerusername), p.property(:ListingId),
