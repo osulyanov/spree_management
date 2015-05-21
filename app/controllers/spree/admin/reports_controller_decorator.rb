@@ -3,7 +3,7 @@ Spree::Admin::ReportsController.class_eval do
 
   def catalogue
     @products = Spree::Product.order(created_at: :desc)
-    send_data(@products.to_csv_report(col_sep: "\t"), type: 'application/xls; charset=utf-8; header=present', filename: catalogue_report_name)
+    send_data(@products.to_csv_report, type: 'text/csv; charset=utf-8; header=present', filename: catalogue_report_name)
   end
 
   private
