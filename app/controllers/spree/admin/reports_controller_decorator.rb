@@ -12,6 +12,6 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def catalogue_report_name
-    "#{Spree::Config[:site_name].gsub(/\s/, '_')}_Catalogue_Report_#{DateTime.now.strftime "%Y-%m-%dT%H%M"}.xls"
+    "#{Spree::Config[:site_name].gsub(/\s/, '_')}_Catalogue_Report_#{DateTime.now.strftime "%Y-%m-%dT%H%M"}.csv"
   end
 end
