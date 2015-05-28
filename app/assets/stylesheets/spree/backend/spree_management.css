@@ -14,3 +14,8 @@
     position: absolute;
     left: 5px;
 }
+
+.bulk_toolbar {
+    text-align: right;
+    margin-top: -20px;
+}
