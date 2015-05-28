@@ -1,3 +1,16 @@
-.small_product.sold_out a.name {
+.sm_product {
+    position: relative;
+}
+
+.sm_product.sold_out a.name {
     color: red;
+}
+
+.sm_product > label {
+    display: block;
+}
+
+.sm_product > label > input {
+    position: absolute;
+    left: 5px;
 }
