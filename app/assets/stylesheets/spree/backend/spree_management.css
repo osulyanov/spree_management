@@ -17,5 +17,9 @@
 
 .bulk_toolbar {
     text-align: right;
-    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+#sorting_explanation {
+    display: block;
 }
