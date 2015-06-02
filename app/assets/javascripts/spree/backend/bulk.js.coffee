@@ -1,25 +1,38 @@
 $ ->
-  $('#admin_bulk_unassign_taxon').on "click", (e) ->
+  $('#admin_bulk_unassign_current_taxon').on "click", (e) ->
     e.preventDefault()
-    # TODO: Send ajax to unassign taxons
+    taxon_id = $('#taxon_id').val()
+    product_ids = $('#taxon_products :input').serializeObject()['products_bulk_action[]']
+    return false unless product_ids
+    products_count = if Array.isArray(product_ids) then product_ids.length else 1
+    products_word = if products_count == 1 then 'product' else 'products'
+    return false unless confirm "Are you sure you want to unassgin the #{products_count} selected #{products_word} from this taxon?"
     $.ajax
-      url: Spree.routes.api_product_bulk_unassign_taxons,
+      url: "/api/products/bulk_unassign_taxons",
+      method: 'PATCH'
       data:
-        id: taxon_id,
+        taxon_id: taxon_id
         token: Spree.api_key
+        product_ids: product_ids
       success: (data) ->
-        el.empty();
-        if data.products.length == 0
-          $('#taxon_products').html("<div class='alert alert-info'>" + Spree.translations.no_results + "</div>")
-        else
-          for product in data.products
-            if product.master.images[0] != undefined && product.master.images[0].small_url != undefined
-              product.image = product.master.images[0].small_url
-            el.append(productTemplate({ product: product }))
+        update_products_list()
 
-    all_taxons = confirm 'Unassign from all Storefront Taxons?'
-    update_products_list()
-
+  $('#admin_bulk_unassign_all_taxons').on "click", (e) ->
+    e.preventDefault()
+    product_ids = $('#taxon_products :input').serializeObject()['products_bulk_action[]']
+    return false unless product_ids
+    products_count = if Array.isArray(product_ids) then product_ids.length else 1
+    products_word = if products_count == 1 then 'product' else 'products'
+    return false unless confirm "Are you sure you want to unassgin the #{products_count} selected #{products_word} from all Storefront taxons?"
+    $.ajax
+      url: "/api/products/bulk_unassign_taxons",
+      method: 'PATCH'
+      data:
+        token: Spree.api_key
+        product_ids: product_ids
+        all_taxons: true
+      success: (data) ->
+        update_products_list()
 
 update_products_list = ->
   el = $('#taxon_products')
@@ -39,3 +52,16 @@ update_products_list = ->
           if product.master.images[0] != undefined && product.master.images[0].small_url != undefined
             product.image = product.master.images[0].small_url
           el.append(productTemplate({ product: product }))
+
+$.fn.serializeObject = ->
+  o = {}
+  a = this.serializeArray()
+  $.each(a, ->
+    if (o[this.name])
+      if !o[this.name].push
+        o[this.name] = [o[this.name]]
+      o[this.name].push(this.value || '')
+    else
+      o[this.name] = this.value || ''
+  )
+  return o;
