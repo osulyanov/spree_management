@@ -34,15 +34,35 @@ $ ->
       success: (data) ->
         update_products_list()
 
+  $('#taxon_id').off 'change'
+  .on 'change', ->
+    $('.select2-search-choice .with-tip').powerTip({
+      smartPlacement: true,
+      fadeInTime: 50,
+      fadeOutTime: 50
+    })
+    update_products_list()
+    false
+
+  $('#sort_by').on 'change', ->
+    if $(@).val() == 'date_asc'
+      $('#taxon_products').sortable "disable"
+    else
+      $('#taxon_products').sortable "enable"
+    update_products_list()
+    false
+
 update_products_list = ->
   el = $('#taxon_products')
   taxon_id = $('#taxon_id').val()
   return unless taxon_id
+  $('#sorting_explanation').hide()
   $.ajax
     url: Spree.routes.taxon_products_api,
     data:
       id: taxon_id,
       token: Spree.api_key
+      sort_by: $('#sort_by').val()
     success: (data) ->
       el.empty();
       if data.products.length == 0
@@ -52,6 +72,7 @@ update_products_list = ->
           if product.master.images[0] != undefined && product.master.images[0].small_url != undefined
             product.image = product.master.images[0].small_url
           el.append(productTemplate({ product: product }))
+        $('#sorting_explanation').show()
 
 $.fn.serializeObject = ->
   o = {}
