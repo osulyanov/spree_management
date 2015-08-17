@@ -17,9 +17,10 @@
 
 .bulk_toolbar {
     text-align: right;
+    margin-top: -20px;
     margin-bottom: 20px;
 }
-
-#sorting_explanation {
-    display: block;
+.bulk_toolbar .drag_or_sort {
+    text-align: left;
+    margin-top: 10px;
 }
