@@ -52,17 +52,22 @@ $ ->
     update_products_list()
     false
 
+  $('#filter_by_seller').on 'change', ->
+    update_products_list()
+    false
+
 update_products_list = ->
   el = $('#taxon_products')
   taxon_id = $('#taxon_id').val()
   return unless taxon_id
-  $('#sorting_explanation').hide()
+#  $('#sorting_explanation').hide()
   $.ajax
     url: Spree.routes.taxon_products_api,
     data:
       id: taxon_id,
       token: Spree.api_key
       sort_by: $('#sort_by').val()
+      filter_by_seller: $('#filter_by_seller').val()
     success: (data) ->
       el.empty();
       if data.products.length == 0

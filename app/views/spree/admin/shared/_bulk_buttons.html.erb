@@ -12,5 +12,8 @@
   <div class="drag_or_sort">
     Click & drug on the products to sort them, or choose to sort them by:
     <%= select_tag :sort_by, options_for_select({ 'Manual Sort Order' => :manual, 'Available Date Ascending' => :date_asc }), class: 'select2', style: 'width: 200px;' %>
+    <br />
+    Filter by:
+    <%= select_tag :filter_by_seller, options_for_select(Spree::Property.all_values("Selleralias").map { |m| [m, m] }, params[:products_search_by_seller_alias]), prompt: 'All Sellers', class: 'select2', style: 'width: 200px;' %>
   </div>
 </div>
