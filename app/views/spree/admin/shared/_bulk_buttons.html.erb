@@ -17,7 +17,7 @@
     <br/>
     Filter by:
     <%
-       seller_options = Spree::ProductProperty.where(property: Spree::Property.find_by(name: 'Selleralias'), product: Spree::Taxon.find_by(permalink: 'approval-queue').products).order('value').map { |m| [m.value, m.value] }
+       seller_options = Spree::ProductProperty.where(property: Spree::Property.find_by(name: 'Selleralias'), product: Spree::Taxon.find_by(permalink: 'approval-queue').products).order('value').pluck(:value).uniq.map { |m| [m, m] }
     %>
     <%= select_tag :filter_by_seller, options_for_select(seller_options, params[:products_search_by_seller_alias]), prompt: 'All Sellers', class: 'select2', style: 'width: 200px;' %>
   </div>
