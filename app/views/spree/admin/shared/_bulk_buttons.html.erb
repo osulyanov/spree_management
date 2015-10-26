@@ -1,21 +1,23 @@
 <div class="bulk_toolbar">
   <ul class="inline-menu">
     <li>
-      <a class="fa fa-cancel button" href="#" icon="cancel" id="admin_bulk_unassign_current_taxon">Unassign from this
+      <a class="fa fa-cancel button" href="#" icon="cancel" id="admin_bulk_unassign_current_taxon">Unassign
+        from this
         taxon</a>
     </li>
     <li>
-      <a class="fa fa-cancel button" href="#" icon="cancel" id="admin_bulk_unassign_all_taxons">Unassign from all
+      <a class="fa fa-cancel button" href="#" icon="cancel" id="admin_bulk_unassign_all_taxons">Unassign
+        from all
         Storefront taxons</a>
     </li>
   </ul>
   <div class="drag_or_sort">
     Click & drug on the products to sort them, or choose to sort them by:
     <%= select_tag :sort_by, options_for_select({ 'Manual Sort Order' => :manual, 'Available Date Ascending' => :date_asc }), class: 'select2', style: 'width: 200px;' %>
-    <br />
+    <br/>
     Filter by:
     <%
-       seller_options = Spree::ProductProperty.where(property: Spree::Property.find_by(name: 'Selleralias'), product: Spree::Taxon.find_by(permalink: 'approval-queue').products).order('value').map { |m| [m, m] }
+       seller_options = Spree::ProductProperty.where(property: Spree::Property.find_by(name: 'Selleralias'), product: Spree::Taxon.find_by(permalink: 'approval-queue').products).order('value').map { |m| [m.value, m.value] }
     %>
     <%= select_tag :filter_by_seller, options_for_select(seller_options, params[:products_search_by_seller_alias]), prompt: 'All Sellers', class: 'select2', style: 'width: 200px;' %>
   </div>
