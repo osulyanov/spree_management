@@ -1,5 +1,5 @@
 <script type='text/template' id='product_template'>
-    <li id="product_{{ product.id }}" data-product-id="{{product.id }}" class="columns three alpha small_product sm_product{{#unless product.total_on_hand}} sold_out{{/unless}}">
+    <li id="product_{{ product.id }}" data-product-id="{{product.id }}" class="columns four alpha small_product sm_product{{#unless product.total_on_hand}} sold_out{{/unless}}">
         <label>
             <input type="checkbox" name="products_bulk_action[]" value="{{product.id }}" id="product_{{product.id }}" />
             <div class="product-image">
