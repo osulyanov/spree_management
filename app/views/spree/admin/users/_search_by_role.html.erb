@@ -1,0 +1,8 @@
+<br>
+<fieldset class="no-border-bottom align-center">
+  <legend align="center">Filter</legend>
+  <div class="field">
+    <label for="by_role">By role</label> <br>
+    <%= select_tag :by_role, options_for_select({ 'ALL' => :all, 'Admin' => :admin, 'User' => :user }, params[:by_role]), class: 'select2 align-left', style: 'width: 220px;' %>
+  </div>
+</fieldset>
